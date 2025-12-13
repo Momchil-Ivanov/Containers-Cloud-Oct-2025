@@ -24,6 +24,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Force database recreation before app starts
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ContactsDbContext>();
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
