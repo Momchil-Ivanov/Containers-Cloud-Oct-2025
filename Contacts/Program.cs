@@ -24,6 +24,14 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Automatically apply database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ContactsDbContext>();
+    context.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
