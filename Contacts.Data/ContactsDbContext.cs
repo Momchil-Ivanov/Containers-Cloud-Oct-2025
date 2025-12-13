@@ -10,7 +10,7 @@ namespace Contacts.Data
         public ContactsDbContext(DbContextOptions<ContactsDbContext> options)
             : base(options)
         {
-            this.Database.Migrate();
+            this.Database.EnsureCreated();
         }
 
         public DbSet<Contact> Contacts { get; set; }
