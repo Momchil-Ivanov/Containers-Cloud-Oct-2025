@@ -24,12 +24,11 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Force database recreation before app starts
+// Ensure database exists on startup
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ContactsDbContext>();
-    db.Database.EnsureDeleted();
-    db.Database.EnsureCreated();
+    db.Database.EnsureCreated(); // Only creates if doesn't exist
 }
 
 if (app.Environment.IsDevelopment())
