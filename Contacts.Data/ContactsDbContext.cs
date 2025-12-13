@@ -10,6 +10,8 @@ namespace Contacts.Data
         public ContactsDbContext(DbContextOptions<ContactsDbContext> options)
             : base(options)
         {
+            // Delete database if it exists, then create all tables fresh
+            this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
 
